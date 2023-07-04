@@ -1,3 +1,4 @@
 asgiref
-Django
+Django~=4.2.3
 sqlparse
+python-dotenv~=1.0.0
