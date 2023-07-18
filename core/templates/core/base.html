@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Default title{% endblock title %}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+  <script src="{% static 'bootstrap.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-2 bg-light sidebar">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'catalog:catalog' %}">Главная</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'catalog:articles' %}">Блог</a>
+              </li>
+            {% if user.is_authenticated %}
+                 <li class="nav-item">
+                <a class="nav-link active" href="{% url 'users:profile' %}">Профиль</a>
+              </li>
+                <li class="nav-item">
+                <a class="nav-link active" href="{% url 'users:logout' %}">Выйти</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'users:login' %}">Войти</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'users:register' %}">Регистрация</a>
+              </li>
+            {% endif %}
+            </ul>
+          </div>
+          <div class="col-md-10 content">
+            <h1>{% block header %}{% endblock header %}</h1>
+            {% block content%}{% endblock content %}
+          </div>
+        </div>
+      </div>
+    </body>
