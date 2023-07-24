@@ -18,6 +18,12 @@ class Client(models.Model):
 
 
 class Mailing(models.Model):
+    TIME_CHOICES = [
+        ('09:00', '09:00'),
+        ('12:00', '12:00'),
+        ('15:00', '15:00'),
+        ('18:00', '18:00'),
+    ]
     SEND_PERIOD_CHOICES = (
         ('daily', 'Раз в день'),
         ('weekly', 'Раз в неделю'),
@@ -28,8 +34,11 @@ class Mailing(models.Model):
         ('started', 'Запущена'),
         ('completed', 'Завершена'),
     )
+
+    time = models.CharField(max_length=5, choices=TIME_CHOICES, default='09:00', verbose_name='время рассылки')
     send_time = models.TimeField(verbose_name='время рассылки')
-    send_period = models.CharField(max_length=7, choices=SEND_PERIOD_CHOICES, verbose_name='периодичность')
+    send_period = models.CharField(max_length=7, choices=SEND_PERIOD_CHOICES, default='daily',
+                                   verbose_name='периодичность')
     send_status = models.CharField(max_length=9, choices=SEND_STATUS_CHOICES, verbose_name='статус')
 
     def __str__(self):
@@ -55,6 +64,8 @@ class MailingMessage(models.Model):
 
 class MailingLog(models.Model):
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='настройка')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='клиент',
+                               null=True)
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name='дата пследней рассылки')
     status = models.CharField(max_length=255, verbose_name='статус')
     response = models.TextField(blank=True, null=True, verbose_name='ответ сервера')
