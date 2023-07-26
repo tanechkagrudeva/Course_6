@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+{% block title %}Список рассылок{% endblock title %}
+{% block content %}
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <h1 class="display-4 fw-normal text-body-emphasis">Рассылки</h1>
+            <p class="fs-5 text-body-secondary">Создание и редактирование рассылок</p>
+        </div>
+
+    <main>
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            {% for object in object_list %}
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h5 class="my-0 fw-normal">{{ object.subject}} </h5>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ object.body|truncatechars:100 }}</p>
+                        <div class="btn-group">
+                              <a href="{% url 'sender:mailing_detail' object.pk %}" class="btn btn-sm btn-outline-primary">Просмотр</a>
+                              <a href="{% url 'sender:mailing_update' object.pk %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
+                              <a href="{% url 'sender:mailing_delete' object.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h5 class="my-0 fw-normal">Новая рассылка</h5>
+                    </div>
+                    <div class="card-body">
+                        <a class="w-100 btn btn-sm btn-outline-primary" href="{% url 'sender:mailing_create' %}">Добавить</a>
+                    </div>
+                </div>
+            </div>
+           </div>
+    </main>
+{% endblock %}

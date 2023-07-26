@@ -3,13 +3,12 @@
 <html lang="en" data-bs-theme="auto">
 <head>
     <script src="{% static 'color-modes.js' %}"></script>
-
+    <title>{% block title %}Default title{% endblock title %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.112.5">
-    <title>Pricing example · Bootstrap v5.3</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/pricing/">
 
@@ -199,8 +198,8 @@
             </a>
 
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Клиенты</a>
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Рассылки</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'sender:client_list' %}">Клиенты</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'sender:mailing_list' %}">Рассылки</a>
                 <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Контакты</a>
                 <a class="py-2 link-body-emphasis text-decoration-none" href="#">О сервисе</a>
             </nav>

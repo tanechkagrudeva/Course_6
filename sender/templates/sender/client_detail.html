@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ object.first_name }} {{ object.last_name }}{% endblock title %}
+{% block content %}
+    <div class="col-md-12">
+      <div class="card">
+        <h1>{{ object.last_name }} {{ object.first_name }} {{ object.patronymic }}</h1>
+        <h6>Почта: {{ object.email }}</h6>
+        <p>Комментарий: {{ object.comment }}</p>
+      </div>
+    </div>
+{% endblock %}
