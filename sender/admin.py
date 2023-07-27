@@ -11,8 +11,8 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Mailing)
 class MailingAdmin(admin.ModelAdmin):
-    list_display = ('send_time', 'send_period', 'send_status',)
-    list_filter = ('send_time', 'send_period', 'send_status',)
+    list_display = ('time', 'send_period', 'send_status',)
+    list_filter = ('time', 'send_period', 'send_status',)
 
 
 @admin.register(MailingMessage)

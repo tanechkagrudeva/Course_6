@@ -37,13 +37,13 @@ class Mailing(models.Model):
     )
 
     time = models.CharField(max_length=5, choices=TIME_CHOICES, default='09:00', verbose_name='время рассылки')
-    send_time = models.TimeField(verbose_name='время рассылки')
     send_period = models.CharField(max_length=7, choices=SEND_PERIOD_CHOICES, default='daily',
                                    verbose_name='периодичность')
-    send_status = models.CharField(max_length=9, choices=SEND_STATUS_CHOICES, verbose_name='статус')
+    send_status = models.CharField(max_length=9, choices=SEND_STATUS_CHOICES,
+                                   default='created', verbose_name='статус')
 
     def __str__(self):
-        return f'{self.send_time} - {self.send_period} - {self.send_status}'
+        return f'{self.time} - {self.send_period} - {self.send_status}'
 
     class Meta:
         verbose_name = 'настройка'
