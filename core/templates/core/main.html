@@ -1,31 +1,62 @@
 {% extends 'core/base.html' %}
-{% block title %}Контакты{% endblock title %}
-{% block header %}Контакты{% endblock header %}
+{% block title %}Главная{% endblock title %}
+{% block header %}Главная{% endblock header %}
 {% block content %}
-            <p>Здесь вы можете найти контактную информацию и форму обратной связи.</p>
+     <div class="container d-flex justify-content-center align-items-center">
+    <h1>Добро пожаловать!!</h1>
+     </div>
+    <div class="container d-flex justify-content-center align-items-center">
 
-            <form method="post">
-                {% csrf_token %}
-              <div class="form-group">
-                <label for="name">Ваше имя</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Количество подписок</h5>
+                  <p class="card-text">{{ mailings.count }}</p>
+                </div>
               </div>
-
-              <div class="form-group">
-                <label for="email">Ваш email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="col-md-4">
+              <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Активных подписок</h5>
+                  <p class="card-text">{{ active_mailings.count  }}</p>
+                </div>
               </div>
-
-              <div class="form-group">
-                <label for="message">Ваше сообщение</label>
-                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+            </div>
+            <div class="col-md-4">
+              <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Активных клиентов</h5>
+                  <p class="card-text">{{ clients.count }}</p>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="container d-flex justify-content-center align-items-center" style="height: 60vh;">
+    {% for article in articles %}
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h5 class="my-0 fw-normal">{{ article.title }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="media/{{ article.image }}" alt="картинка">
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>{{ article.content|truncatechars:100 }}</li>
+                        </ul>
+                        <div class="btn-group">
+                              <a href="#" class="btn btn-sm btn-outline-primary">Читать</a>
+                        </div>
+                        <div class="card-footer">
+                            Просмотры: {{ article.views }}
+                        </div>
+                    </div>
+                </div>
 
-              <button type="submit" class="btn btn-primary">Отправить</button>
-            </form>
+    {% endfor %}
 
-            <h2>Контакты</h2>
-            <p>Телефон: +7 (123) 456-78-90</p>
-            <p>Email: example@example.com</p>
-            <p>Адрес: г. Гусь-Хрустальный, ул. Лебединая, д. 1</p>
 {% endblock content %}
