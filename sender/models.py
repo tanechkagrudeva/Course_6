@@ -9,6 +9,7 @@ class Client(models.Model):
 
     email = models.EmailField(max_length=150, verbose_name='почта')
     comment = models.TextField(verbose_name='комментарий')
+    user = models.ManyToManyField(User, verbose_name='пользователь')
 
     def __str__(self):
         return f'{self.first_name} ({self.email})'
@@ -55,7 +56,7 @@ class MailingMessage(models.Model):
     subject = models.CharField(max_length=255, verbose_name='тема')
     body = models.TextField(verbose_name='текст письма')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='клиент', blank=True, null=True, )
-    user = models.ManyToManyField(User)
+    user = models.ManyToManyField(User, verbose_name='пользователь')
 
     def __str__(self):
         return f'{self.subject} {self.client}'
@@ -67,8 +68,6 @@ class MailingMessage(models.Model):
 
 class MailingLog(models.Model):
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='настройка')
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='клиент',
-                               null=True)
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name='дата последней рассылки')
     status = models.CharField(max_length=255, verbose_name='статус')
     response = models.TextField(blank=True, null=True, verbose_name='ответ сервера')
