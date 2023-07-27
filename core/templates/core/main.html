@@ -36,19 +36,19 @@
           </div>
         </div>
     </div>
-    <div class="container d-flex justify-content-center align-items-center" style="height: 60vh;">
+    <div class="container d-flex justify-content-center align-items-center m-3">
     {% for article in articles %}
-            <div class="col">
+            <div class="col-5">
                 <div class="card mb-4 rounded-3 shadow-sm">
                     <div class="card-header py-3">
                         <h5 class="my-0 fw-normal">{{ article.title }}</h5>
                     </div>
                     <div class="card-body">
-                        <img src="media/{{ article.image }}" alt="картинка">
+                        <img class="card-img" src="{{ article.image.url }}" alt="картинка">
                         <ul class="list-unstyled mt-3 mb-4">
                             <li>{{ article.content|truncatechars:100 }}</li>
                         </ul>
-                        <div class="btn-group">
+                        <div class="btn-group mb-2">
                               <a href="#" class="btn btn-sm btn-outline-primary">Читать</a>
                         </div>
                         <div class="card-footer">

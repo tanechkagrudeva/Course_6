@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 
 class Client(models.Model):
@@ -53,7 +54,8 @@ class MailingMessage(models.Model):
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='настройка')
     subject = models.CharField(max_length=255, verbose_name='тема')
     body = models.TextField(verbose_name='текст письма')
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='клиент', blank=True, null=True,)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='клиент', blank=True, null=True, )
+    user = models.ManyToManyField(User)
 
     def __str__(self):
         return f'{self.subject} {self.client}'
