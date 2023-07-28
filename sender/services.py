@@ -8,12 +8,19 @@ import logging
 
 
 def send_mailing(mailing):
-    current_time = timezone.now()
-    emails = [client.email for client in mailing.client.all()]
-    send_mail(mailing.subject,
-              mailing.body,
-              settings.EMAIL_HOST_USER,
-              emails)
+    current_time = datetime.now()
+    mailing_time = datetime.strptime(mailing.mailing.time, "%H:%M")
+
+    print(current_time)
+    print(mailing_time)
+    if current_time > mailing.mailing.time:
+        emails = [client.email for client in mailing.client.all()]
+        send_mail(
+                  mailing.subject,
+                  mailing.body,
+                  settings.EMAIL_HOST_USER,
+                  emails
+                  )
 
 
 
