@@ -1,4 +1,3 @@
-import schedule
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.utils import timezone
@@ -8,11 +7,13 @@ from datetime import timedelta, datetime
 import logging
 
 
-def send_mailing():
-    """Рассылка"""
-    messages = MailingMessage.objects.all()
-    for message in messages:
-        current_time = timezone.now()
-        mailing = message.mailing.send_period
+def send_mailing(mailing):
+    current_time = timezone.now()
+    emails = [client.email for client in mailing.client.all()]
+    send_mail(mailing.subject,
+              mailing.body,
+              settings.EMAIL_HOST_USER,
+              emails)
+
 
 

@@ -4,19 +4,13 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 
 from sender.forms import ClientForm, MailingMessageForm
 from sender.models import Client, MailingMessage
+from sender.services import send_mailing
 
 
 class ClientListView(ListView):
     model = Client
 
     def get_queryset(self):
-        #
-        # # Если у пользователя есть права на отключение любой рассылки
-        # if self.request.user.has_perm('service.can_disable_mailings'):
-        #     return super().get_queryset()
-
-        # Иначе пользователю доступны только созданные им рассылки
-        # else:
         return Client.objects.filter(user=self.request.user.pk)
 
 
@@ -72,13 +66,6 @@ class MailingListView(ListView):
     model = MailingMessage
 
     def get_queryset(self):
-        #
-        # # Если у пользователя есть права на отключение любой рассылки
-        # if self.request.user.has_perm('service.can_disable_mailings'):
-        #     return super().get_queryset()
-
-        # Иначе пользователю доступны только созданные им рассылки
-        # else:
         return MailingMessage.objects.filter(user=self.request.user.pk)
 
 
@@ -91,6 +78,8 @@ class MailingCreateView(CreateView):
         mailing = form.save()
         mailing.user = self.request.user
         mailing.save()
+        send_mailing(mailing)
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
