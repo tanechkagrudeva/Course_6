@@ -2,14 +2,16 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from blog.models import Article
-from sender.models import Mailing, Client
+from sender.models import Mailing, Client, MailingMessage
 
 
+@login_required()
 def main_page(request):
     mailing_model = Mailing.objects.all()
     mailing_model_created = Mailing.objects.filter(send_status='created')
-    client_model = Client.objects.all()
+    client_model = Client.objects.filter(user=request.user.pk)
     articles_model = Article.objects.all()
+
 
     context = {
         'mailings': mailing_model,

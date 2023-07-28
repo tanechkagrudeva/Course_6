@@ -9,6 +9,16 @@ from sender.models import Client, MailingMessage
 class ClientListView(ListView):
     model = Client
 
+    def get_queryset(self):
+        #
+        # # Если у пользователя есть права на отключение любой рассылки
+        # if self.request.user.has_perm('service.can_disable_mailings'):
+        #     return super().get_queryset()
+
+        # Иначе пользователю доступны только созданные им рассылки
+        # else:
+        return Client.objects.filter(user=self.request.user.pk)
+
 
 class ClientCreateView(CreateView):
     model = Client
@@ -24,6 +34,12 @@ class ClientCreateView(CreateView):
         else:
             context_data['formset'] = product_formset()
         return context_data
+
+    def form_valid(self, form):
+        mailing = form.save()
+        mailing.user = self.request.user
+        mailing.save()
+        return super().form_valid(form)
 
 
 class ClientUpdateView(UpdateView):
@@ -55,11 +71,27 @@ class ClientDetailView(DetailView):
 class MailingListView(ListView):
     model = MailingMessage
 
+    def get_queryset(self):
+        #
+        # # Если у пользователя есть права на отключение любой рассылки
+        # if self.request.user.has_perm('service.can_disable_mailings'):
+        #     return super().get_queryset()
+
+        # Иначе пользователю доступны только созданные им рассылки
+        # else:
+        return MailingMessage.objects.filter(user=self.request.user.pk)
+
 
 class MailingCreateView(CreateView):
     model = MailingMessage
     form_class = MailingMessageForm
     success_url = reverse_lazy('sender:mailing_list')
+
+    def form_valid(self, form):
+        mailing = form.save()
+        mailing.user = self.request.user
+        mailing.save()
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
