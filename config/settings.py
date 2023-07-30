@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import os
+
 from pathlib import Path
 from dotenv import load_dotenv
 from os import getenv, path
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django_crontab',
     'sender',
     'users',
     'core',
@@ -152,3 +152,19 @@ EMAIL_PORT = getenv('EMAIL_PORT')
 EMAIL_HOST_USER = getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
+
+CACHE_ENABLED = getenv('CACHE_ENABLED') == 'True'
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": getenv('CACHE_LOCATION'),
+        }
+    }
+
+CRONJOBS = [
+        ('0 12 * * *', 'mailing_list.services.send_email', ['ежедневно']),
+        ('0 12 * * 1', 'mailing_list.services.send_email', ['еженедельно']),
+        ('0 12 1 * *', 'mailing_list.services.send_email', ['ежемесячно']),
+    ]

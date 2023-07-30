@@ -11,14 +11,14 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Mailing)
 class MailingAdmin(admin.ModelAdmin):
-    list_display = ('time', 'send_period', 'send_status',)
-    list_filter = ('time', 'send_period', 'send_status',)
+    list_display = ('time', 'send_period', 'status',)
+    list_filter = ('time', 'send_period', 'status',)
 
 
 @admin.register(MailingMessage)
 class MailingMessageAdmin(admin.ModelAdmin):
-    list_display = ('mailing', 'subject', 'body',)
-    list_filter = ('mailing', 'subject', 'body',)
+    list_display = ('subject', 'body',)
+    list_filter = ('subject', 'body',)
 
 
 @admin.register(MailingLog)

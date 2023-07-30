@@ -16,7 +16,7 @@ class ClientForm(forms.ModelForm):
 class MailingMessageForm(forms.ModelForm):
     class Meta:
         model = MailingMessage
-        fields = ('mailing', 'subject', 'body', 'client',)
+        fields = ('subject', 'body', 'client',)
 
     def clean_name(self):
         name = self.cleaned_data['name']

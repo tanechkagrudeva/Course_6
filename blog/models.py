@@ -15,3 +15,7 @@ class Article(models.Model):
         verbose_name = 'статья'
         verbose_name_plural = 'статьи'
 
+    def views_count(self):
+        self.views += 1
+        self.save()
+

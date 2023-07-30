@@ -8,7 +8,7 @@ from sender.models import Mailing, Client, MailingMessage
 @login_required()
 def main_page(request):
     mailing_model = MailingMessage.objects.all().filter(user=request.user.pk)
-    mailing_model_created = Mailing.objects.all().filter(send_status='created')
+    mailing_model_created = Mailing.objects.all().filter(status='создана')
     client_model = Client.objects.filter(user=request.user.pk)
     articles_model = Article.objects.all()
 
