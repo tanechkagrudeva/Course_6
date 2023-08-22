@@ -15,11 +15,11 @@ class Migration(migrations.Migration):
             name='Article',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=100, verbose_name='заголовок')),
-                ('content', models.TextField(verbose_name='содержимое статьи')),
-                ('image', models.ImageField(upload_to='images/', verbose_name='изображение')),
-                ('views', models.PositiveIntegerField(default=0, verbose_name='просмотры')),
-                ('published_at', models.DateField(verbose_name='дата публикации')),
+                ('title', models.CharField(max_length=100, verbose_name='Заголовок')),
+                ('content', models.TextField(verbose_name='Содержимое')),
+                ('image', models.ImageField(upload_to='images/', verbose_name='Изображение')),
+                ('views', models.PositiveIntegerField(default=0, verbose_name='Просмотры')),
+                ('published_at', models.DateField(verbose_name='Дата публикации')),
             ],
             options={
                 'verbose_name': 'статья',

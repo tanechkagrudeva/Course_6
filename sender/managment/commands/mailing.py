@@ -1,9 +1,9 @@
 from django.core.management import BaseCommand
 
-from sender.services import mailing_processing
+from sender.services import send_email
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        mailing_processing()
+        send_email()
